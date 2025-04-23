@@ -69,9 +69,9 @@ public class Parser {
 	// fuer das Startsymbol Command
 	static public void initFirstCommand() {
 		firstCommand.clear();
-		firstCommand.
-		// firstCommand.add(Lextype.anfang);
-
+		firstCommand.add(Lextype.SET);
+		firstCommand.add(Lextype.SELECT);
+		firstCommand.add(Lextype.TURN);
 	}
 
 	// Pruefung von Anfangsterminalen fuer das Startsymbol Command.
@@ -107,7 +107,43 @@ public class Parser {
 	// Das Startsymbol
 	static public void Command() {
 		checkFirstCommand();
-
+		if(sym.type == Lextype.SELECT)
+			SelectModus();
+		else if(sym.type == Lextype.TURN)
+			TurnCommand();
+		else if(sym.type == Lextype.SET)
+			SetTemperature();
 	}
+
+	static public void SetTemperature() {
+		check(Lextype.SET);
+		check(Lextype.TEMPERATURE);
+		check(Lextype.INTEGER);
+		check(Lextype.DEGREES);
+	}
+
+	static public void SelectModus() {
+		check(Lextype.SELECT);
+		check(Lextype.MODE);
+		MODUS();
+	}
+
+	static public void TurnCommand() {
+		check(Lextype.TURN);
+		if(sym.type == Lextype.ON)
+			check(Lextype.ON);
+		else if(sym.type == Lextype.OFF)
+			check(Lextype.OFF);
+	}
+
+	static public void MODUS() {
+		if(sym.type == Lextype.HEATING)
+			check(Lextype.HEATING);
+		else if(sym.type == Lextype.COOLING)
+			check(Lextype.COOLING);
+		else if(sym.type == Lextype.FAN)
+			check(Lextype.FAN);
+	}
+
 
 }
