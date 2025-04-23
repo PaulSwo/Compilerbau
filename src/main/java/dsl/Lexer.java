@@ -166,7 +166,9 @@ public class Lexer {
 			// Wenn das aktuelle Zeichen eine Ziffer ist,
 			// erkenne eine Ganzzahl,
 			// beende die Schleife
-			if (Character.isDigit(ch) || ch == '+' || ch == '-') {
+
+			// Auskommentiert, da wir nur eine Zahl Checken sollen, der Letzte Test sooll Fehlschlagen (set temperature +22 degrees)
+			if (Character.isDigit(ch) /*|| ch == '+' || ch == '-'*/) {
 				token = integer();
 				break;
 			}
